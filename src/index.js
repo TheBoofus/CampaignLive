@@ -11,29 +11,14 @@ const client = new Client({
     ],
 });
 
-let status = [
-    {
-        name: 'test streaming',
-        type: ActivityType.Streaming,
-        url: 'https://www.youtube.com/@TheBoofus',
-    },
-    {
-        name: 'test watching',
-        type: ActivityType.Watching,
-    },
-    {
-        name: 'test competing',
-        type: ActivityType.Competing,
-    },
-]
 
 client.on('ready', (c) => {
     console.log(`✅${c.user.tag} is online.`);
 
-    setInterval(() => {
-        let random = Math.floor(Math.random() * status.length);
-        client.user.setActivity(status[random]);
-    }, 10000);
+    client.user.setActivity({
+        name: 'Dungeons & Dragons',
+        type: ActivityType.Competing,
+    });
 });
 
 client.on('messageCreate', (message) =>{
