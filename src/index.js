@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const {Client, IntentsBitField, EmbedBuilder} = require('discord.js');
+const {Client, IntentsBitField, EmbedBuilder, ActivityType} = require('discord.js');
 
 const client = new Client({
     intents: [
@@ -8,13 +8,32 @@ const client = new Client({
         IntentsBitField.Flags.GuildMembers,
         IntentsBitField.Flags.GuildMessages,
         IntentsBitField.Flags.MessageContent,
-    ]
+    ],
+});
 
-    
-})
+let status = [
+    {
+        name: 'test streaming',
+        type: ActivityType.Streaming,
+        url: 'https://www.youtube.com/@TheBoofus',
+    },
+    {
+        name: 'test watching',
+        type: ActivityType.Watching,
+    },
+    {
+        name: 'test competing',
+        type: ActivityType.Competing,
+    },
+]
 
 client.on('ready', (c) => {
     console.log(`✅${c.user.tag} is online.`);
+
+    setInterval(() => {
+        let random = Math.floor(Math.random() * status.length);
+        client.user.setActivity(status[random]);
+    }, 10000);
 });
 
 client.on('messageCreate', (message) =>{
